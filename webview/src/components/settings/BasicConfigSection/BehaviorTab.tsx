@@ -112,6 +112,8 @@ export interface BehaviorTabProps {
   onTaskCompletionNotificationEnabledChange?: (enabled: boolean) => void;
   askUserQuestionNotificationEnabled?: boolean;
   onAskUserQuestionNotificationEnabledChange?: (enabled: boolean) => void;
+  systemNotificationOnlyWhenUnfocused?: boolean;
+  onSystemNotificationOnlyWhenUnfocusedChange?: (enabled: boolean) => void;
   askUserQuestionSoundNotificationEnabled?: boolean;
   onAskUserQuestionSoundNotificationEnabledChange?: (enabled: boolean) => void;
   permissionDialogTimeoutSeconds?: number;
@@ -150,6 +152,8 @@ const BehaviorTab = ({
   onTaskCompletionNotificationEnabledChange = () => {},
   askUserQuestionNotificationEnabled = false,
   onAskUserQuestionNotificationEnabledChange = () => {},
+  systemNotificationOnlyWhenUnfocused = false,
+  onSystemNotificationOnlyWhenUnfocusedChange = () => {},
   askUserQuestionSoundNotificationEnabled = false,
   onAskUserQuestionSoundNotificationEnabledChange = () => {},
   permissionDialogTimeoutSeconds = DEFAULT_PERMISSION_DIALOG_TIMEOUT_SECONDS,
@@ -469,6 +473,32 @@ const BehaviorTab = ({
         <small className={styles.formHint}>
           <span className="codicon codicon-info" />
           <span>{t('settings.basic.taskCompletionNotification.hint')}</span>
+        </small>
+      </div>
+
+      {/* System notification focus gate */}
+      <div className={styles.streamingSection}>
+        <div className={styles.fieldHeader}>
+          <span className="codicon codicon-eye-closed" />
+          <span className={styles.fieldLabel}>{t('settings.basic.systemNotificationOnlyWhenUnfocused.label')}</span>
+        </div>
+        <label className={styles.toggleWrapper}>
+          <input
+            type="checkbox"
+            className={styles.toggleInput}
+            checked={systemNotificationOnlyWhenUnfocused}
+            onChange={(e) => onSystemNotificationOnlyWhenUnfocusedChange(e.target.checked)}
+          />
+          <span className={styles.toggleSlider} />
+          <span className={styles.toggleLabel}>
+            {systemNotificationOnlyWhenUnfocused
+              ? t('settings.basic.systemNotificationOnlyWhenUnfocused.enabled')
+              : t('settings.basic.systemNotificationOnlyWhenUnfocused.disabled')}
+          </span>
+        </label>
+        <small className={styles.formHint}>
+          <span className="codicon codicon-info" />
+          <span>{t('settings.basic.systemNotificationOnlyWhenUnfocused.hint')}</span>
         </small>
       </div>
 

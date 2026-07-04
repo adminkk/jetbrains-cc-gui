@@ -81,6 +81,7 @@ export interface UseSettingsBasicActionsReturn {
   statusBarWidgetEnabled: boolean;
   taskCompletionNotificationEnabled: boolean;
   askUserQuestionNotificationEnabled: boolean;
+  systemNotificationOnlyWhenUnfocused: boolean;
   askUserQuestionSoundNotificationEnabled: boolean;
   commitAiConfig: CommitAiConfig;
   promptEnhancerConfig: PromptEnhancerConfig;
@@ -115,6 +116,7 @@ export interface UseSettingsBasicActionsReturn {
   handleStatusBarWidgetEnabledChange: (enabled: boolean) => void;
   handleTaskCompletionNotificationEnabledChange: (enabled: boolean) => void;
   handleAskUserQuestionNotificationEnabledChange: (enabled: boolean) => void;
+  handleSystemNotificationOnlyWhenUnfocusedChange: (enabled: boolean) => void;
   handleAskUserQuestionSoundNotificationEnabledChange: (enabled: boolean) => void;
   permissionDialogTimeoutSeconds: number;
   handlePermissionDialogTimeoutChange: (seconds: number) => void;
@@ -168,6 +170,7 @@ export interface UseSettingsBasicActionsReturn {
   /** @internal */ setStatusBarWidgetEnabled: (enabled: boolean) => void;
   /** @internal */ setTaskCompletionNotificationEnabled: (enabled: boolean) => void;
   /** @internal */ setAskUserQuestionNotificationEnabled: (enabled: boolean) => void;
+  /** @internal */ setSystemNotificationOnlyWhenUnfocused: (enabled: boolean) => void;
   /** @internal */ setAskUserQuestionSoundNotificationEnabled: (enabled: boolean) => void;
   /** @internal */ setCommitAiConfig: (config: CommitAiConfig) => void;
   /** @internal */ setPromptEnhancerConfig: (config: PromptEnhancerConfig) => void;
@@ -285,6 +288,7 @@ export function useSettingsBasicActions({
 
   // AskUserQuestion reminder notification toggle (default: false, opt-in feature)
   const [askUserQuestionNotificationEnabled, setAskUserQuestionNotificationEnabled] = useState<boolean>(false);
+  const [systemNotificationOnlyWhenUnfocused, setSystemNotificationOnlyWhenUnfocused] = useState<boolean>(false);
   const [askUserQuestionSoundNotificationEnabled, setAskUserQuestionSoundNotificationEnabled] = useState<boolean>(false);
 
   // Permission dialog timeout — owned by App.tsx; we treat the prop as authoritative.
@@ -501,6 +505,12 @@ export function useSettingsBasicActions({
     setAskUserQuestionNotificationEnabled(enabled);
     const payload = { askUserQuestionNotificationEnabled: enabled };
     sendToJava(`set_ask_user_question_notification_enabled:${JSON.stringify(payload)}`);
+  }, []);
+
+  const handleSystemNotificationOnlyWhenUnfocusedChange = useCallback((enabled: boolean) => {
+    setSystemNotificationOnlyWhenUnfocused(enabled);
+    const payload = { systemNotificationOnlyWhenUnfocused: enabled };
+    sendToJava(`set_system_notification_only_when_unfocused:${JSON.stringify(payload)}`);
   }, []);
 
   const handleAskUserQuestionSoundNotificationEnabledChange = useCallback((enabled: boolean) => {
@@ -723,6 +733,9 @@ export function useSettingsBasicActions({
     askUserQuestionNotificationEnabled,
     setAskUserQuestionNotificationEnabled,
     handleAskUserQuestionNotificationEnabledChange,
+    systemNotificationOnlyWhenUnfocused,
+    setSystemNotificationOnlyWhenUnfocused,
+    handleSystemNotificationOnlyWhenUnfocusedChange,
     askUserQuestionSoundNotificationEnabled,
     setAskUserQuestionSoundNotificationEnabled,
     handleAskUserQuestionSoundNotificationEnabledChange,
