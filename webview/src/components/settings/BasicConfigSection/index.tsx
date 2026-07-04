@@ -98,6 +98,8 @@ interface BasicConfigSectionProps {
   // AskUserQuestion reminder notification configuration
   askUserQuestionNotificationEnabled?: boolean;
   onAskUserQuestionNotificationEnabledChange?: (enabled: boolean) => void;
+  askUserQuestionSoundNotificationEnabled?: boolean;
+  onAskUserQuestionSoundNotificationEnabledChange?: (enabled: boolean) => void;
   // Permission dialog timeout configuration
   permissionDialogTimeoutSeconds?: number;
   onPermissionDialogTimeoutChange?: (seconds: number) => void;
@@ -184,6 +186,8 @@ const BasicConfigSection = (props: BasicConfigSectionProps) => {
           onTaskCompletionNotificationEnabledChange={props.onTaskCompletionNotificationEnabledChange}
           askUserQuestionNotificationEnabled={props.askUserQuestionNotificationEnabled}
           onAskUserQuestionNotificationEnabledChange={props.onAskUserQuestionNotificationEnabledChange}
+          askUserQuestionSoundNotificationEnabled={props.askUserQuestionSoundNotificationEnabled}
+          onAskUserQuestionSoundNotificationEnabledChange={props.onAskUserQuestionSoundNotificationEnabledChange}
           permissionDialogTimeoutSeconds={props.permissionDialogTimeoutSeconds}
           onPermissionDialogTimeoutChange={props.onPermissionDialogTimeoutChange}
         />

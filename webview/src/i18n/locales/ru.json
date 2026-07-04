@@ -250,6 +250,12 @@
         "disabled": "Выключено",
         "hint": "При включении показывает системное уведомление, когда Claude задаёт вопрос, чтобы вы его не пропустили. При выключении уведомление не появляется."
       },
+      "askUserQuestionSoundNotification": {
+        "label": "Ask User Question Sound",
+        "enabled": "Включено",
+        "disabled": "Выключено",
+        "hint": "When enabled, plays the configured alert sound when Claude asks you a question. Uses the sound selection and focus rules below."
+      },
       "sendShortcut": {
         "label": "Клавиша отправки",
         "enter": "Enter для отправки",

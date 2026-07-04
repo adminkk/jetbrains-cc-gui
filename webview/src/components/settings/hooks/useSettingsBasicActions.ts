@@ -81,6 +81,7 @@ export interface UseSettingsBasicActionsReturn {
   statusBarWidgetEnabled: boolean;
   taskCompletionNotificationEnabled: boolean;
   askUserQuestionNotificationEnabled: boolean;
+  askUserQuestionSoundNotificationEnabled: boolean;
   commitAiConfig: CommitAiConfig;
   promptEnhancerConfig: PromptEnhancerConfig;
 
@@ -114,6 +115,7 @@ export interface UseSettingsBasicActionsReturn {
   handleStatusBarWidgetEnabledChange: (enabled: boolean) => void;
   handleTaskCompletionNotificationEnabledChange: (enabled: boolean) => void;
   handleAskUserQuestionNotificationEnabledChange: (enabled: boolean) => void;
+  handleAskUserQuestionSoundNotificationEnabledChange: (enabled: boolean) => void;
   permissionDialogTimeoutSeconds: number;
   handlePermissionDialogTimeoutChange: (seconds: number) => void;
   handleCommitAiProviderChange: (provider: CommitAiProvider) => void;
@@ -166,6 +168,7 @@ export interface UseSettingsBasicActionsReturn {
   /** @internal */ setStatusBarWidgetEnabled: (enabled: boolean) => void;
   /** @internal */ setTaskCompletionNotificationEnabled: (enabled: boolean) => void;
   /** @internal */ setAskUserQuestionNotificationEnabled: (enabled: boolean) => void;
+  /** @internal */ setAskUserQuestionSoundNotificationEnabled: (enabled: boolean) => void;
   /** @internal */ setCommitAiConfig: (config: CommitAiConfig) => void;
   /** @internal */ setPromptEnhancerConfig: (config: PromptEnhancerConfig) => void;
 }
@@ -282,6 +285,7 @@ export function useSettingsBasicActions({
 
   // AskUserQuestion reminder notification toggle (default: false, opt-in feature)
   const [askUserQuestionNotificationEnabled, setAskUserQuestionNotificationEnabled] = useState<boolean>(false);
+  const [askUserQuestionSoundNotificationEnabled, setAskUserQuestionSoundNotificationEnabled] = useState<boolean>(false);
 
   // Permission dialog timeout — owned by App.tsx; we treat the prop as authoritative.
   // We intentionally do NOT keep a local copy: it would be dead state because the
@@ -499,6 +503,12 @@ export function useSettingsBasicActions({
     sendToJava(`set_ask_user_question_notification_enabled:${JSON.stringify(payload)}`);
   }, []);
 
+  const handleAskUserQuestionSoundNotificationEnabledChange = useCallback((enabled: boolean) => {
+    setAskUserQuestionSoundNotificationEnabled(enabled);
+    const payload = { askUserQuestionSoundNotificationEnabled: enabled };
+    sendToJava(`set_ask_user_question_sound_notification_enabled:${JSON.stringify(payload)}`);
+  }, []);
+
   // Permission dialog timeout change handler
   const handlePermissionDialogTimeoutChange = useCallback((seconds: number) => {
     const clamped = clampPermissionDialogTimeoutSeconds(seconds);
@@ -713,6 +723,9 @@ export function useSettingsBasicActions({
     askUserQuestionNotificationEnabled,
     setAskUserQuestionNotificationEnabled,
     handleAskUserQuestionNotificationEnabledChange,
+    askUserQuestionSoundNotificationEnabled,
+    setAskUserQuestionSoundNotificationEnabled,
+    handleAskUserQuestionSoundNotificationEnabledChange,
     permissionDialogTimeoutSeconds,
     handlePermissionDialogTimeoutChange,
     commitAiConfig,

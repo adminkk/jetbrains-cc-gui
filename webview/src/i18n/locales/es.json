@@ -250,6 +250,12 @@
         "disabled": "Desactivado",
         "hint": "Cuando está activado, muestra una notificación del sistema cuando Claude te hace una pregunta, para que no la pierdas. Cuando está desactivado, no aparece ninguna notificación."
       },
+      "askUserQuestionSoundNotification": {
+        "label": "Ask User Question Sound",
+        "enabled": "Activado",
+        "disabled": "Desactivado",
+        "hint": "When enabled, plays the configured alert sound when Claude asks you a question. Uses the sound selection and focus rules below."
+      },
       "sendShortcut": {
         "label": "Atajo de envío",
         "enter": "Enter para enviar",

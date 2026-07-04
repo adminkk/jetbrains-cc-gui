@@ -31,6 +31,8 @@ function renderBehaviorTab(overrides: Partial<ComponentProps<typeof BehaviorTab>
     onTaskCompletionNotificationEnabledChange: vi.fn(),
     askUserQuestionNotificationEnabled: false,
     onAskUserQuestionNotificationEnabledChange: vi.fn(),
+    askUserQuestionSoundNotificationEnabled: false,
+    onAskUserQuestionSoundNotificationEnabledChange: vi.fn(),
     permissionDialogTimeoutSeconds: 300,
     onPermissionDialogTimeoutChange: vi.fn(),
     ...overrides,
@@ -68,6 +70,26 @@ describe('BehaviorTab ask user question notification toggle', () => {
 
     fireEvent.click(checkbox);
     expect(onAskUserQuestionNotificationEnabledChange).toHaveBeenCalledWith(false);
+  });
+});
+
+describe('BehaviorTab ask user question sound notification toggle', () => {
+  it('fires the sound callback independently from the visual notification callback', () => {
+    const onAskUserQuestionNotificationEnabledChange = vi.fn();
+    const onAskUserQuestionSoundNotificationEnabledChange = vi.fn();
+    renderBehaviorTab({
+      onAskUserQuestionNotificationEnabledChange,
+      onAskUserQuestionSoundNotificationEnabledChange,
+    });
+
+    const checkbox = screen.getByRole('checkbox', {
+      name: /settings.basic.askUserQuestionSoundNotification.disabled/i,
+    }) as HTMLInputElement;
+
+    fireEvent.click(checkbox);
+
+    expect(onAskUserQuestionSoundNotificationEnabledChange).toHaveBeenCalledWith(true);
+    expect(onAskUserQuestionNotificationEnabledChange).not.toHaveBeenCalled();
   });
 });
 
